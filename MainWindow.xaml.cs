@@ -32,11 +32,14 @@ namespace Terra_Telemetry_App
             GOXPressureTextBlock.Text = _telemetryData.GOXFuelTankPressure.ToString();
             EthanolPressureTextBlock.Text = _telemetryData.EthanolFuelTankPressure.ToString();
         }
-        private void CheckforUpdate_Click(object sender, RoutedEventArgs e)
+        private async void CheckforUpdate_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Check for update and display message box with result
-            MessageBox.Show("No update available.", "Check for Update");
+            string repoLink = "https://api.github.com/repos/RELMYMathieu/Terra-Telemetry-App";
+
+            Updater updater = new Updater(repoLink);
+            await updater.CheckForUpdatesAsync();
         }
+
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
