@@ -1,0 +1,164 @@
+﻿<Window x:Class="Terra_Telemetry_App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Terra_Telemetry_App"
+        mc:Ignorable="d"
+        WindowStyle ="None"
+        ResizeMode="CanResizeWithGrip"
+        MinWidth="860" MinHeight="350"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        Title="Terra Control and Telemetry App" Height="350" Width="860" Icon="/OLDTerraSpaceLogoTransparent.ico">
+    <Window.Resources>
+        <!-- Close Button Style -->
+        <Style x:Key="CloseButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="0,5,5,0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse Fill="{TemplateBinding Background}"/>
+                            <Path Data="M 5,5 L 25,25 M 5,25 L 25,5" Stroke="{TemplateBinding Foreground}" StrokeThickness="2"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Maximize Button Style -->
+        <Style x:Key="MaximizeButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="0,5,5,0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse Fill="{TemplateBinding Background}"/>
+                            <Rectangle Fill="{TemplateBinding Foreground}" Margin="5,10" Width="12" Height="8"/>
+                            <Rectangle Fill="{TemplateBinding Foreground}" Margin="10,5" Width="8" Height="12"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Minimize Button Style -->
+        <Style x:Key="MinimizeButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="0,5,5,0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse Fill="{TemplateBinding Background}"/>
+                            <Rectangle Fill="{TemplateBinding Foreground}" Margin="5,20,5,0" Width="20" Height="2"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Fancy TitleBar -->
+        <Border Background="#FF2C3E50" Height="40" Margin="0,0,0,238" MouseDown="Border_MouseDown">
+            <DockPanel>
+                <Button x:Name="CloseButton" DockPanel.Dock="Right" Style="{StaticResource CloseButtonStyle}" Click="CloseButton_Click"/>
+                <Button DockPanel.Dock="Right" Style="{StaticResource MaximizeButtonStyle}" Click="MaximizeButton_Click"/>
+                <Button DockPanel.Dock="Right" Style="{StaticResource MinimizeButtonStyle}" Click="MinimizeButton_Click"/>
+
+                <Image Source="/OLDTerraSpaceLogoTransparent.ico" />
+                <TextBlock Text="Terra Control and Telemetry App" Margin="0 0" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
+            </DockPanel>
+        </Border>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="49*"/>
+                <ColumnDefinition Width="725*"/>
+                <ColumnDefinition Width="26*"/>
+            </Grid.ColumnDefinitions>
+            <TabControl Grid.ColumnSpan="3" RenderTransformOrigin="0.5,0.5">
+                <TabControl.Resources>
+                    <Style TargetType="TabItem">
+                        <Setter Property="FontFamily" Value="Bahnschrift Light" />
+                    </Style>
+                </TabControl.Resources>
+                <TabControl.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="0" Y="45"/>
+                    </TransformGroup>
+                </TabControl.RenderTransform>
+                <TabItem Header="Telemetry">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Engine Chamber Temperature (°C):" Grid.Row="0" Grid.Column="0" Margin="10" />
+                        <TextBlock x:Name="TempTextBlock" Text="-" Grid.Row="0" Grid.Column="1" Margin="10" />
+                        <TextBlock Text="Engine Chamber Pressure (bar):" Grid.Row="1" Grid.Column="0" Margin="10" />
+                        <TextBlock x:Name="PressureTextBlock" Text="-" Grid.Row="1" Grid.Column="1" Margin="10" />
+                        <TextBlock Text="GOX Fuel Level (mL):" Grid.Row="2" Grid.Column="0" Margin="10" />
+                        <TextBlock x:Name="GOXLevelTextBlock" Text="-" Grid.Row="2" Grid.Column="1" Margin="10" />
+                        <TextBlock Text="GOX Fuel Tank Pressure (bar):" Grid.Row="3" Grid.Column="0" Margin="10" />
+                        <TextBlock x:Name="GOXPressureTextBlock" Text="-" Grid.Row="3" Grid.Column="1" Margin="10" />
+                        <TextBlock Text="Ethanol Fuel Level (mL):" Grid.Row="4" Grid.Column="0" Margin="10" />
+                        <TextBlock x:Name="EthanolLevelTextBlock" Text="-" Grid.Row="4" Grid.Column="1" Margin="10" />
+                        <TextBlock Text="Ethanol Fuel Tank Pressure (bar):" Grid.Row="5" Grid.Column="0" Margin="10" />
+                        <TextBlock x:Name="EthanolPressureTextBlock" Text="-" Grid.Row="5" Grid.Column="1" Margin="10" />
+                    </Grid>
+                </TabItem>
+
+                <TabItem Header="Control">
+                    <TextBlock Text="Being Coded..." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="64"/>
+                </TabItem>
+
+                <TabItem Header="App Info">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="11*"/>
+                            <ColumnDefinition Width="386*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Content="Version: 1.0" Margin="5,5,5,5" Grid.ColumnSpan="2"/>
+                        <Button x:Name="CheckforUpdate" Grid.Row="1" Content="Check for Update" Margin="5,5,5,5" Grid.ColumnSpan="2" Click="CheckforUpdate_Click"/>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Grid>
+</Window>
